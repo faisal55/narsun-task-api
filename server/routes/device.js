@@ -37,9 +37,12 @@ const upload = multer({
 router.get('/', deviceController.get_devices);
 
 // ADD/CREATE A DEVICE
-router.post('/', upload.single('deviceImage'), deviceController.create_device);
+router.post('/', deviceController.create_device);
 
 // REMOVE A USER
 router.delete('/:deviceId', deviceController.delete_device);
+
+// UPDATE A DEVICE
+router.put('/:deviceId', deviceController.update_device);
 
 module.exports = router;

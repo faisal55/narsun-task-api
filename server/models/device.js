@@ -13,6 +13,7 @@ const deviceSchema = Schema({
 
 }, {timestamps: true});
 
+// This pre hook will remove the link between device's refenced user before getting removed.
 deviceSchema.pre('remove', function(next) {
     var device = this;
     device.model('User').update(

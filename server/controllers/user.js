@@ -70,3 +70,27 @@ exports.delete_user = function (req, res, next) {
         }
     })
 };
+
+exports.update_user = function (req, res) {
+    User.findByIdAndUpdate(req.params.userId, req.body, {
+        new: true
+    }, function (err, user) {
+        if (err) {
+            res.status(400).send({
+                status: 'Failed!',
+                message: 'Failed update user!!',
+                errors: err
+            });
+        } else if (user == null || user == undefined) {
+            res.status(404).send({
+                status: 'Failed!',
+                message: 'User not found!'
+            });
+        } else {
+            res.status(200).send({
+                message: 'Updated User successfully!',
+                data: user
+            });
+        }
+    })
+}

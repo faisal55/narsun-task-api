@@ -30,13 +30,7 @@ exports.get_devices = function (req, res) {
 };
 
 exports.create_device = function (req, res, next) {
-    const device = new Device({
-        deviceName   : req.body.deviceName,
-        cost         : req.body.cost,
-        expiry       : req.body.expiry,
-        warranty     : req.body.warranty,
-        deviceImage  : req.file.path
-    });
+    const device = new Device(req.body);
     device.save(function (err, device) {
         if (err) {
             res.status(400).send({
@@ -76,3 +70,26 @@ exports.delete_device = function (req, res, next) {
 }
 
 
+exports.update_device = function (req, res) {
+    Device.findByIdAndUpdate(req.params.deviceId, req.body, {
+        new: true
+    }, function (err, device) {
+        if (err) {
+            res.status(400).send({
+                status: 'Failed!',
+                message: 'Failed update device!',
+                errors: err
+            });
+        } else if (device == null || device == undefined) {
+            res.status(404).send({
+                status: 'Failed!',
+                message: 'Drevice not found!'
+            });
+        } else {
+            res.status(200).send({
+                message: 'Updated Device successfully!',
+                data: device
+            });
+        }
+    })
+}

@@ -46,7 +46,7 @@ exports.create_settings = function (req, res, next) {
 };
 
 exports.update_settings = function (req, res) {
-    Setting.findByIdAndUpdate(req.params.settingId, req.body, {
+    Setting.findByIdAndUpdate(req.params.id, req.body, {
         new: true
     }, function (err, settings) {
         if (err) {
